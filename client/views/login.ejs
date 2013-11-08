@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+     <title>Node ejs test</title>
+  </head>
+
+  <body>
+          <div style="display:block; width:50%; margin:0 auto;">
+
+                            
+              <h3>Login</h3>
+              
+
+                <form action="login" method="post">
+                  <label>
+                      User
+                      <input type="text" name="username"/>
+                  </label>
+                  <br />
+                  <label>
+                      Password
+                      <input type="password" name="password"/>
+                  </label>
+                </form>   
+
+                <span style="color red; padding:1em; border:1px solid:red; background: #ccc; width:100%; font-size:13px;">
+                  <%= errorMsg %> <br />
+                  <%= username %> <br />
+                  <%= password %> <br />
+                </span>                     
+
+
+          </div>
+  </body>
+</html>
