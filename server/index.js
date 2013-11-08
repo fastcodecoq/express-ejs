@@ -1,6 +1,7 @@
 var express = require("express");
 var app = express();
 var conf = require("./conf.json");
+var engine = require('ejs-locals');
 
 /* 
 
@@ -28,22 +29,27 @@ io.set('transports', [
 
 */
 
+app.engine('ejs', engine);
+
 app.configure(function(){
 	
-	app.use("views", __dirname.replace("server", "client") + "/views/");
-	app.use("view engine","ejs");
+	app.set('template_engine', 'ejs');
+	app.use('views', __dirname.replace("server", "client") + '/views');
+	app.use('view engine','ejs');
 	app.use(express.bodyParser());
   	app.use(express.methodOverride());
   	app.use(express.cookieParser());
+  	app.use(app.router);
  
  });
 
 app.listen(conf.client_port);
 console.log("cliente en: ", conf.client_port);
+console.log(__dirname.replace("server", "client") + "/views/");
 
 app.get("/", function(req, res){
 
-	res.render("home.ejs",{ 		
+	res.render("home",{ 		
 		locals: 
 	  	 { 
 			message : "Hello world"  // aqui colocas todas las variables que usará el view
@@ -55,19 +61,17 @@ app.get("/", function(req, res){
 
 app.get("/login", function(req, res){
 
-	res.render("login.ejs",{ 
-		layout:false  // esto indica a ejs que no habrá contenido dinámico
-	   });
+	res.render("login");
 
  });
 
 
 app.post("/login", function(req, res){
 
-	res.render("login_res.ejs",{ 		
+	res.render("login",{ 		
 		locals: 
 	  	 { 
-			errorMsg : "Usuario o clave incorrecto!"  // aqui colocas todas las variables que usará el view
+			  errorMsg : "Usuario o clave incorrecto!"  // aqui colocas todas las variables que usará el view
 			, password : req.password
 			, username : req.username
 	     }
