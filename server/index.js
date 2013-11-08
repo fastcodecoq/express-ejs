@@ -34,8 +34,9 @@ app.engine('ejs', engine);
 app.configure(function(){
 	
 	app.set('template_engine', 'ejs');
-	app.use('views', __dirname.replace("server", "client") + '/views');
-	app.use('view engine','ejs');
+	app.set('views', __dirname.replace("server", "client") + '/views');
+	app.set('view engine','ejs');
+	app.use(express.favicon());
 	app.use(express.bodyParser());
   	app.use(express.methodOverride());
   	app.use(express.cookieParser());
@@ -66,14 +67,17 @@ app.get("/login", function(req, res){
  });
 
 
-app.post("/login", function(req, res){
+app.post("/user-login", function(req, res){
 
-	res.render("login",{ 		
+	 console.log(req.body);
+	 var post = req.body;
+
+	res.render("user-login",{ 		
 		locals: 
 	  	 { 
 			  errorMsg : "Usuario o clave incorrecto!"  // aqui colocas todas las variables que usará el view
-			, password : req.password
-			, username : req.username
+			, password : post.password
+			, username : post.username
 	     }
 	   });
 
