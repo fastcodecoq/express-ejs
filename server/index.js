@@ -72,6 +72,9 @@ app.post("/user-login", function(req, res){
 	 console.log(req.body);
 	 var post = req.body;
 
+	 var credentials = { user:"gomosoft" , password:"node+ejs" };
+
+if(credentials.user != post.username && credentials.password != post.password)
 	res.render("user-login",{ 		
 		locals: 
 	  	 { 
@@ -80,5 +83,7 @@ app.post("/user-login", function(req, res){
 			, username : post.username
 	     }
 	   });
+else
+		res.render("user-loged");
 
  });
